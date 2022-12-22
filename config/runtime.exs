@@ -31,8 +31,8 @@ if config_env() == :prod do
   maybe_ipv6 = if System.get_env("ECTO_IPV6"), do: [:inet6], else: []
 
   config :era, Era.Repo,
-    # ssl: true,
-    url: database_url,
+    ssl: true,
+    url: System.get_env("DATABASE_URL"),
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
     socket_options: maybe_ipv6
 

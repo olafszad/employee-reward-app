@@ -2,10 +2,9 @@ import Config
 
 # Configure your database
 config :era, Era.Repo,
-  username: "postgres",
-  password: "12345",
-  hostname: "localhost",
-  database: "era_dev",
+  username: "wwaibhjjcgvwgy",
+  hostname: "ec2-63-35-156-160.eu-west-1.compute.amazonaws.com",
+  database: "d2a85irj6ltidq",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
@@ -73,3 +72,5 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+import_config "dev.secret.exs"

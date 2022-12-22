@@ -10,6 +10,7 @@ import Config
 # which you should run after static files are built and
 # before starting your production server.
 config :era, EraWeb.Endpoint,
+    http: [:inet6, port: System.get_env("PORT") || 4000],
     load_from_system_env: true,
     url: [scheme: "https", host: "employee-reward-app-olafszad.herokuapp.com", port: 443],
     force_ssl: [rewrite_on: [:x_forwarded_proto]],

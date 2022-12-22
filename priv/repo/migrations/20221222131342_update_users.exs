@@ -3,8 +3,8 @@ defmodule Era.Repo.Migrations.UpdateUsers do
 
   def change do
     alter table(:users) do
-      modify :role_id, :int
-      modify :number_of_points, :int
+      modify :role_id, :integer
+      modify :number_of_points, :integer
     end
   end
 end

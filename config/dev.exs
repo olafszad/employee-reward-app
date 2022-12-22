@@ -1,13 +1,6 @@
 import Config
 
-# Configure your database
-config :era, Era.Repo,
-  username: "wwaibhjjcgvwgy",
-  hostname: "ec2-63-35-156-160.eu-west-1.compute.amazonaws.com",
-  database: "d2a85irj6ltidq",
-  stacktrace: true,
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
@@ -72,5 +65,3 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
-
-import_config "dev.secret.exs"

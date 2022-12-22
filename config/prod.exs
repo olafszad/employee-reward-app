@@ -20,6 +20,17 @@ config :era, EraWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+# Configure your database
+config :era, Era.Repo,
+    #username: "wwaibhjjcgvwgy",
+    #password: Era.fetch_env!(:external_service, :password),
+    #hostname: "ec2-63-35-156-160.eu-west-1.compute.amazonaws.com",
+    #database: "d2a85irj6ltidq",
+    adapter: Ecto.Adapters.Postgres,
+    pool_size: 18,
+    ssl: true,
+    url: System.get_env("DATABASE_URL")
+
 # config :era, Era.Repo,
 #     adapter: Ecto.Adapters.Postgres,
 #     url: System.get_env("DATABASE_URL"),

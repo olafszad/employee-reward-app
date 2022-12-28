@@ -27,6 +27,12 @@ defmodule EraWeb.Router do
     get "/", PageController, :index
   end
 
+  scope "/user", EraWeb do
+    pipe_through :browser
+
+    get "/profile", UserController, :index
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", EraWeb do
   #   pipe_through :api

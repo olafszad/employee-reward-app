@@ -1,0 +1,15 @@
+.container-flex{
+    display: flex;
+}
+
+.container-flex.flex-column{
+    flex-direction: column;
+}
+
+.margin.bottom-30{
+    margin-bottom:30px
+}
+
+.primary-color{
+    color: #e65100;
+}

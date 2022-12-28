@@ -5,25 +5,38 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="csrf-token" content={csrf_token_value()}>
-    <%= live_title_tag assigns[:page_title] || "Era", suffix: " · Phoenix Framework" %>
+    <%= live_title_tag assigns[:page_title] || "Era", suffix: " · Employee Reward App" %>
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
   <body>
-    <nav>
+    <nav class="orange darken-4">
       <div class="nav-wrapper container">
         <a href="/" class="brand-logo">
           Employee Reward App
         </a>
 
-        <ul class="right">
+        <ul class="right" style="font-size: 1rem;">
           <%= if Pow.Plug.current_user(@conn) do %>
             <li>
-              <%= @current_user.email %>
+              <%= link "User Profile", to: Routes.page_path(@conn, :index)%>
+            </li>
+            <li>
+              <%= link "Admin Panel", to: Routes.page_path(@conn, :index)%>
+            </li>
+            <li>
+              <%= link "Reports", to: Routes.page_path(@conn, :index)%>
+            </li>
+            <li>
+              <%= link "Edit Profile", to: Routes.pow_registration_path(@conn, :edit) %>
             </li>
             <li>
               <%= link "Sign Out", to: Routes.pow_session_path(@conn, :delete), method: :delete %>
+            </li>
+            <li style="border-left: 2px solid white; height: 100%; padding: 0px 15px">
+              Signed in as:
+              <%= @current_user.email %>
             </li>
           <% else %>
             <li>

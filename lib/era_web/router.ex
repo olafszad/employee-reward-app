@@ -15,6 +15,11 @@ defmodule EraWeb.Router do
     plug EraWeb.EnsureRolePlug, :admin
   end
 
+  pipeline :protected do
+    plug Pow.Plug.RequireAuthenticated,
+      error_handler: Pow.Phoenix.PlugErrorHandler
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -32,9 +37,15 @@ defmodule EraWeb.Router do
   end
 
   scope "/user", EraWeb do
-    pipe_through [:browser]
+    pipe_through :browser
 
     get "/profile", UserController, :index
+  end
+
+  scope "/admin", EraWeb do
+    pipe_through [:browser, :admin]
+
+    get "/panel", AdminController, :index
   end
 
   # Other scopes may use custom stacks.

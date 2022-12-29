@@ -8,8 +8,15 @@
     <%= live_title_tag assigns[:page_title] || "Era", suffix: " · Employee Reward App" %>
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const elems = document.querySelectorAll('select');
+        const instances = M.FormSelect.init(elems, {});
+    });
+    </script>
   </head>
   <body>
     <nav class="orange darken-4">
@@ -26,15 +33,11 @@
 
             <%= if Era.Users.is_admin?(@current_user) do %>
               <li>
-                <%= link "Admin Panel", to: Routes.page_path(@conn, :index)%>
+                <%= link "Admin Panel", to: Routes.admin_path(@conn, :index)%>
               </li>
 
               <li>
                 <%= link "Reports", to: Routes.page_path(@conn, :index)%>
-              </li>
-
-              <li>
-                <%= link "Register", to: Routes.pow_registration_path(@conn, :new) %>
               </li>
             <% end %>
 
@@ -56,6 +59,9 @@
               <%= @current_user.number_of_points %>
             </li>
           <% else %>
+            <li>
+                <%= link "Register", to: Routes.pow_registration_path(@conn, :new) %>
+            </li>
             <li>
               <%= link "Sign In", to: Routes.pow_session_path(@conn, :new) %>
             </li>

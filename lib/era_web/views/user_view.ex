@@ -1,4 +1,3 @@
 defmodule EraWeb.UserView do
-    use EraWeb, :view
-  end
-  
+  use EraWeb, :view
+end

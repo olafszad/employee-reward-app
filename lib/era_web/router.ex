@@ -11,6 +11,10 @@ defmodule EraWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :admin do
+    plug EraWeb.EnsureRolePlug, :admin
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -28,7 +32,7 @@ defmodule EraWeb.Router do
   end
 
   scope "/user", EraWeb do
-    pipe_through :browser
+    pipe_through [:browser]
 
     get "/profile", UserController, :index
   end

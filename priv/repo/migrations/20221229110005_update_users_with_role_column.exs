@@ -1,14 +1,10 @@
-defmodule Era.Users.User do
-  use Ecto.Schema
-  use Pow.Ecto.Schema
+defmodule Era.Repo.Migrations.UpdateUsersWithRoleColumn do
+  use Ecto.Migration
 
-  schema "users" do
-    field :number_of_points, :integer, default: 0
-    field :role, :string, default: "user"
-
-    pow_user_fields()
-
-    timestamps()
+  def change do
+    alter table(:users) do
+      add :role, :string
+    end
   end
 
   @spec changeset_role(Ecto.Schema.t() | Ecto.Changeset.t(), map()) :: Ecto.Changeset.t()

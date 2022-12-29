@@ -15,38 +15,47 @@
     <nav class="orange darken-4">
       <div class="nav-wrapper container">
         <a href="/" class="brand-logo">
-          Employee Reward App
+          ERA
         </a>
 
         <ul class="right" style="font-size: 1rem;">
           <%= if Pow.Plug.current_user(@conn) do %>
             <li>
-              <%= link "User Profile", to: Routes.page_path(@conn, :index)%>
+              <%= link "User Profile", to: Routes.user_path(@conn, :index)%>
             </li>
-            <li>
-              <%= link "Admin Panel", to: Routes.page_path(@conn, :index)%>
-            </li>
-            <li>
-              <%= link "Reports", to: Routes.page_path(@conn, :index)%>
-            </li>
+
+            <%= if Era.Users.is_admin?(@current_user) do %>
+              <li>
+                <%= link "Admin Panel", to: Routes.page_path(@conn, :index)%>
+              </li>
+
+              <li>
+                <%= link "Reports", to: Routes.page_path(@conn, :index)%>
+              </li>
+
+              <li>
+                <%= link "Register", to: Routes.pow_registration_path(@conn, :new) %>
+              </li>
+            <% end %>
+
             <li>
               <%= link "Edit Profile", to: Routes.pow_registration_path(@conn, :edit) %>
             </li>
+
             <li>
               <%= link "Sign Out", to: Routes.pow_session_path(@conn, :delete), method: :delete %>
             </li>
+
             <li style="border-left: 2px solid white; height: 100%; padding: 0px 15px">
               Signed in as:
               <%= @current_user.email %>
             </li>
+
             <li style="border-left: 2px solid rgba(255,255,255,0.4); height: 100%; padding: 0px 15px;">
               Total points: 
               <%= @current_user.number_of_points %>
             </li>
           <% else %>
-            <li>
-              <%= link "Register", to: Routes.pow_registration_path(@conn, :new) %>
-            </li>
             <li>
               <%= link "Sign In", to: Routes.pow_session_path(@conn, :new) %>
             </li>

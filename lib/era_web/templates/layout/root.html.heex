@@ -40,7 +40,8 @@
               <%= @current_user.email %>
             </li>
             <li style="border-left: 2px solid rgba(255,255,255,0.4); height: 100%; padding: 0px 15px;">
-              Total points: 420
+              Total points: 
+              <%= @current_user.number_of_points %>
             </li>
           <% else %>
             <li>

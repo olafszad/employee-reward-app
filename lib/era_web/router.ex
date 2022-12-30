@@ -46,6 +46,8 @@ defmodule EraWeb.Router do
     pipe_through [:browser, :admin]
 
     get "/panel", AdminController, :index
+    get "/rewards", AdminController, :new
+    post "/rewards/new", AdminController, :create
   end
 
   # Other scopes may use custom stacks.

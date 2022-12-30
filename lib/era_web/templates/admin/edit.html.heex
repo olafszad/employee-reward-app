@@ -1,0 +1,11 @@
+<%= form_for @changeset, Routes.admin_path(@conn, :update, @reward), fn f -> %>
+    <div class="form-group">
+        <%= text_input f, :name, placeholder: "Reward name", class: "form-control" %>
+        <%= error_tag f, :name %>
+        <%= text_input f, :price, placeholder: "Price", class: "form-control" %>
+        <%= error_tag f, :price %>
+        
+    </div>
+
+    <%= submit "Update reward", class: "btn primary-color" %>
+<% end %>

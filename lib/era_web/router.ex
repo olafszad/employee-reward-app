@@ -48,6 +48,12 @@ defmodule EraWeb.Router do
     get "/panel", AdminController, :index
     get "/rewards", AdminController, :new
     post "/rewards/new", AdminController, :create
+    get "/rewards/:id/edit", AdminController, :edit
+    put "/rewards/:id", AdminController, :update
+    delete "/rewards/:id", AdminController, :delete
+    get "/user/:id/edit", AdminController, :edit_user_points
+    put "/user/:id", AdminController, :update_user_points
+
   end
 
   # Other scopes may use custom stacks.

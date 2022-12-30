@@ -1,0 +1,9 @@
+<%= form_for @changeset, Routes.admin_path(@conn, :update_user_points, @user), fn f -> %>
+    <div class="form-group">
+        <%= text_input f, :number_of_points, placeholder: "Points", class: "form-control" %>
+        <%= error_tag f, :number_of_points %>
+        
+    </div>
+
+    <%= submit "Update user points", class: "btn btn-primary" %>
+<% end %>

@@ -11,12 +11,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const elems = document.querySelectorAll('select');
-        const instances = M.FormSelect.init(elems, {});
-    });
-    </script>
   </head>
   <body>
     <nav class="orange darken-4">
@@ -55,7 +49,7 @@
             </li>
 
             <li style="border-left: 2px solid rgba(255,255,255,0.4); height: 100%; padding: 0px 15px;">
-              Total points: 
+              Total points:
               <%= @current_user.number_of_points %>
             </li>
           <% else %>

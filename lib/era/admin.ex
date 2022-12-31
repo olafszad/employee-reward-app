@@ -1,5 +1,6 @@
 defmodule Era.Admin do
     use Ecto.Schema
+    
     import Ecto.Changeset
     
     schema "rewards" do

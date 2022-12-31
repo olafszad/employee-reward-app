@@ -1,0 +1,9 @@
+<%= form_for @changeset, Routes.user_path(@conn, :deduct_points_from_logged_user, @user), fn f -> %>
+    <div class="form-group">
+        <%= text_input f, :email, placeholder: "Email", class: "form-control" %>
+        <%= text_input f, :number_of_points, placeholder: "Points", class: "form-control" %>
+        <%= error_tag f, :number_of_points %>
+    </div>
+
+    <%= submit "Transfer points to other user", class: "btn primary-color" %>
+<% end %>

@@ -11,7 +11,6 @@ defmodule EraWeb.AdminController do
     end
 
     def new(conn, _params) do
-        IO.inspect(_params)
         changeset = Admin.changeset(%Admin{}, %{})
         render conn, "new.html", changeset: changeset
     end

@@ -30,25 +30,57 @@ defmodule EraWeb.UserController do
         render conn, "transfer.html", changeset: changeset, user: user
     end
 
-    def add_points_to_selected_user(conn, %{"id" => user_id}) do
+    def trans(conn,  %{"id" => user_id, "user" => user}) do
 
     end
 
+    # def add_points_to_selected_user(conn,  %{"id" => user_id, "user" => user}) do
+    #     points = Era.Repo.get(User, user_id)
+    #     loggeed_user_points = Era.Repo.get(User, conn.assigns.current_user.id).number_of_points
+    #     points_to_deduct = String.to_integer(user["number_of_points"])
+    #     deducted_points = loggeed_user_points - points_to_deduct
+    #     deducted_points_map = %{"number_of_points" => deducted_points}
+    #     changeset = User.changeset(points, deducted_points_map)
+
+    #     IO.puts("whos calling me?")
+
+    # end
+
     def deduct_points_from_logged_user(conn,  %{"id" => user_id, "user" => user}) do
+
+        #Handling current user points to deduct
         points = Era.Repo.get(User, user_id)
         loggeed_user_points = Era.Repo.get(User, conn.assigns.current_user.id).number_of_points
         points_to_deduct = String.to_integer(user["number_of_points"])
+        transfering_to_user_email = user["email"]
         deducted_points = loggeed_user_points - points_to_deduct
         deducted_points_map = %{"number_of_points" => deducted_points}
+        changeset_deduct = User.changeset(points, deducted_points_map)
 
-        changeset = User.changeset(points, deducted_points_map)
+        #Handling reciever points to add
+        reciever = Era.Repo.get_by(User, email: transfering_to_user_email)
+        reciever_current_points = reciever.number_of_points
+        reciever_added_points = reciever_current_points + points_to_deduct
+        reciever_added_points_map = %{"number_of_points" => reciever_added_points}
+        changeset_receiver = User.changeset(reciever, reciever_added_points_map)
+
+        #Handling data to insert into transfer history
 
         if points_to_deduct > loggeed_user_points || points_to_deduct <= 0 do
             conn
             |> put_flash(:info, "Invalid points amount")
             |> redirect(to: Routes.user_path(conn, :index))
         else
-            case Era.Repo.update(changeset) do
+            case Era.Repo.update(changeset_deduct) do
+                {:ok, _user} ->
+                    conn
+                    |> put_flash(:info, "Points Transfered")
+                    |> redirect(to: Routes.user_path(conn, :index))
+                {:error, changeset} ->
+                    render conn, "transfer.html", changeset: changeset, user: points
+            end
+
+            case Era.Repo.update(changeset_receiver) do
                 {:ok, _user} ->
                     conn
                     |> put_flash(:info, "Points Transfered")

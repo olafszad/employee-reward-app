@@ -41,6 +41,7 @@ defmodule EraWeb.Router do
 
     get "/profile", UserController, :index
     put "/profile/transfer/:id", UserController, :deduct_points_from_logged_user
+    put "/profile/transfer/:id", UserController, :add_points_to_selected_user
     get "/profile/transfer/:id", UserController, :edit
   end
 

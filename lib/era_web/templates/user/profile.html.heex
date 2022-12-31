@@ -1,26 +1,4 @@
 <div class="row">
-    <div class="col s4 container-flex flex-column">
-        <div class="card">
-            <h6 class="center-align">Transfer points to other users</h6>
-
-            <%!-- <div class="input-field col s10 offset-s1">
-                <input value="Joe" type="text" class="validate">
-                <label class="active">Reciever</label>
-            </div>
-
-            <div class="input-field col s10 offset-s1">
-                <input value="50" type="text" class="validate">
-                <label class="active">Amount</label>
-            </div>
-
-            <div class="col offset-s1 margin bottom-30">
-                <%= submit "Send", class: "waves-effect waves-light btn orange darken-4" %>
-            </div> --%>
-        </div>
-    </div>
-
-
-
     <div class="col s8 card container-flex flex-column">
         <div>
             <ul class="collection with-header">
@@ -60,6 +38,19 @@
                     </div>
                 </li>
             </ul>
+        </div>
+    </div>
+
+    <div class="col s4 container-flex flex-column">
+        <div class="card">
+            <h6 class="center-align col s12">Transfer points to other users:</h6>
+
+            <div class="primary-color">
+                <%= link to: Routes.user_path(@conn, :edit, @conn.assigns.current_user.id), class: "orange darken-4 btn waves-effect waves-light card col s4 offset-s4" do %>
+                    <i class="material-icons">attach_money</i>                
+                <% end %>
+            </div>
+
         </div>
     </div>
 

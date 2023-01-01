@@ -69,13 +69,13 @@ defmodule EraWeb.AdminController do
 
     def edit_user_points(conn, %{"id" => user_id}) do
         user = Era.Repo.get(User, user_id)
-        changeset = User.changeset(user)
+        changeset = User.changeset_user(user)
         render conn, "edit_user.html", changeset: changeset, user: user
     end
 
     def update_user_points(conn, %{"id" => user_id, "user" => user}) do
         old_number_of_points = Era.Repo.get(User, user_id)
-        changeset = User.changeset(old_number_of_points, user)
+        changeset = User.changeset_user(old_number_of_points, user)
 
         case Era.Repo.update(changeset) do
             {:ok, _user} ->

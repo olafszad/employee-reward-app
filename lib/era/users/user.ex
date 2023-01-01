@@ -4,7 +4,7 @@ defmodule Era.Users.User do
   import Ecto.Changeset
 
   schema "users" do
-    field :number_of_points, :integer, default: 0
+    field :number_of_points, :integer, default: 50
     field :role, :string, default: "user"
 
     pow_user_fields()
@@ -12,7 +12,7 @@ defmodule Era.Users.User do
     timestamps()
   end
 
-  def changeset(struct, params \\ %{}) do
+  def changeset_user(struct, params \\ %{}) do
     struct
     |> cast(params, [:email, :number_of_points])
     |> validate_required([:email, :number_of_points])

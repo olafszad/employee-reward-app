@@ -18,7 +18,7 @@ defmodule EraWeb.UserController do
 
     def edit(conn, %{"id" => user_id}) do
         user = Era.Repo.get(User, user_id)
-        changeset = User.changeset(user)
+        changeset = User.changeset_user(user)
         render conn, "transfer.html", changeset: changeset, user: user
     end
 
@@ -30,7 +30,7 @@ defmodule EraWeb.UserController do
 
         deducted_points = loggeed_user_points - reward_price
         deducted_points_map = %{"number_of_points" => deducted_points}
-        changeset_deduct = User.changeset(Era.Repo.get(User, conn.assigns.current_user.id), deducted_points_map)
+        changeset_deduct = User.changeset_user(Era.Repo.get(User, conn.assigns.current_user.id), deducted_points_map)
 
         if reward_price > loggeed_user_points do
             conn
@@ -66,7 +66,7 @@ defmodule EraWeb.UserController do
         transfering_to_user_email = user["email"]
         deducted_points = loggeed_user_points - points_to_deduct
         deducted_points_map = %{"number_of_points" => deducted_points}
-        changeset_deduct = User.changeset(points, deducted_points_map)
+        changeset_deduct = User.changeset_user(points, deducted_points_map)
 
         
         #Handling reciever points to add
@@ -74,7 +74,7 @@ defmodule EraWeb.UserController do
         reciever_current_points = reciever.number_of_points
         reciever_added_points = reciever_current_points + points_to_deduct
         reciever_added_points_map = %{"number_of_points" => reciever_added_points}
-        changeset_receiver = User.changeset(reciever, reciever_added_points_map)
+        changeset_receiver = User.changeset_user(reciever, reciever_added_points_map)
 
         #Handling data to insert into transfer history
         transfer_points_map = %{"amount" => points_to_deduct}

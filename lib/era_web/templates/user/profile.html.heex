@@ -47,11 +47,11 @@
                 </thead>
 
                 <%= for transfer <- @transfers do %>
-                    <%= if @conn.assigns.current_user.id == transfer.from_user do%>
+                    <%= if @conn.assigns.current_user.email == transfer.from_user do%>
                         <tbody>
                             <tr>
-                                <td><%= transfer.inserted_at %></td>
-                                <td><%= transfer.amount %></td>
+                                <td><%= "#{transfer.inserted_at.year}-#{transfer.inserted_at.month}-#{transfer.inserted_at.day} #{transfer.inserted_at.hour}:#{transfer.inserted_at.minute}" %></td>
+                                <td><%= transfer.amount %> points</td>
                                 <td><%= transfer.to_user %></td>
                             </tr>
                         </tbody>

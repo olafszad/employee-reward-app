@@ -68,8 +68,8 @@ defmodule EraWeb.UserController do
         deducted_points_map = %{"number_of_points" => deducted_points}
         changeset_deduct = User.changeset(points, deducted_points_map)
 
+        
         #Handling reciever points to add
-
         reciever = Era.Repo.get_by(User, email: transfering_to_user_email)
         reciever_current_points = reciever.number_of_points
         reciever_added_points = reciever_current_points + points_to_deduct
@@ -77,13 +77,12 @@ defmodule EraWeb.UserController do
         changeset_receiver = User.changeset(reciever, reciever_added_points_map)
 
         #Handling data to insert into transfer history
-        sender_id = points.id
-        receiver_id = reciever.id
         transfer_points_map = %{"amount" => points_to_deduct}
-        users_map = %{"from_user" => points.id, "to_user" => reciever.id, "amount" => points_to_deduct}
+        users_map = %{"from_user" => points.email, "to_user" => reciever.email, "amount" => points_to_deduct}
         changeset_transfers = Transfers.changeset(%Transfers{}, users_map)
 
-        if points_to_deduct > loggeed_user_points || points_to_deduct <= 0 do
+
+        if points_to_deduct > loggeed_user_points || points_to_deduct  <= 0 || conn.assigns.current_user.email == reciever.email  do
             conn
             |> put_flash(:info, "Invalid points amount or user email")
             |> redirect(to: Routes.user_path(conn, :index))
@@ -127,7 +126,7 @@ defmodule EraWeb.UserController do
         else
           conn
           |> put_flash(:error, "You cannot edit that")
-          |> redirect(to: Routes.topic_path(conn, :index))
+          |> redirect(to: Routes.user_path(conn, :index))
           |> halt()
         end
     end

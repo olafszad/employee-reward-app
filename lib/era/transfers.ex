@@ -5,8 +5,8 @@ defmodule Era.Transfers do
 
     schema "transfers" do
         field :amount, :integer
-        field :from_user, :integer
-        field :to_user, :integer
+        field :from_user, :string
+        field :to_user, :string
 
         timestamps()
     end

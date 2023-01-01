@@ -1,6 +1,6 @@
 <%= form_for @changeset, Routes.user_path(@conn, :transfer, @user), fn f -> %>
     <div class="form-group col s6">
-        <%= text_input f, :email, placeholder: "Email", class: "form-control" %>
+        <%= text_input f, :email, class: "form-control" %>
         <%= text_input f, :number_of_points, placeholder: "Points", class: "form-control" %>
         <%= error_tag f, :number_of_points %>
     </div>

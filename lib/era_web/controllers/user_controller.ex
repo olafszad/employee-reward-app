@@ -52,7 +52,7 @@ defmodule EraWeb.UserController do
                     |> put_flash(:info, "Points Transfered")
                     |> redirect(to: Routes.user_path(conn, :index))
                 {:error, changeset} ->
-                    render conn, "transfer.html", changeset: changeset
+                    render conn, "transfer.html", changeset_user: changeset
             end
         end
     end
@@ -74,7 +74,7 @@ defmodule EraWeb.UserController do
         reciever_current_points = reciever.number_of_points
         reciever_added_points = reciever_current_points + points_to_deduct
         reciever_added_points_map = %{"number_of_points" => reciever_added_points}
-        changeset_receiver = User.changeset_user(reciever, reciever_added_points_map)
+        changeset_receiver = User.changeset_user(reciever, reciever_added_points_map)       
 
         #Handling data to insert into transfer history
         transfer_points_map = %{"amount" => points_to_deduct}
@@ -82,11 +82,12 @@ defmodule EraWeb.UserController do
         changeset_transfers = Transfers.changeset(%Transfers{}, users_map)
 
 
-        if points_to_deduct > loggeed_user_points || points_to_deduct  <= 0 || conn.assigns.current_user.email == reciever.email  do
+        if points_to_deduct > loggeed_user_points || points_to_deduct <= 0  || conn.assigns.current_user.email == reciever.email  do
             conn
             |> put_flash(:info, "Invalid points amount or user email")
             |> redirect(to: Routes.user_path(conn, :index))
         else
+
             case Era.Repo.insert(changeset_transfers) do
                 {:ok, _transfers} ->
                     conn
@@ -96,23 +97,26 @@ defmodule EraWeb.UserController do
                     render conn, "transfer.html", changeset: changeset, user: points
             end
 
-            case Era.Repo.update(changeset_deduct) do
-                {:ok, _user} ->
-                    conn
-                    |> put_flash(:info, "Points Transfered")
-                    |> redirect(to: Routes.user_path(conn, :index))
-                {:error, changeset} ->
-                    render conn, "transfer.html", changeset: changeset, user: points
-            end
+            Era.Repo.update(changeset_deduct)
+            Era.Repo.update(changeset_receiver)
 
-            case Era.Repo.update(changeset_receiver) do
-                {:ok, _user} ->
-                    conn
-                    |> put_flash(:info, "Points Transfered")
-                    |> redirect(to: Routes.user_path(conn, :index))
-                {:error, changeset} ->
-                    render conn, "transfer.html", changeset: changeset, user: points
-            end
+            # case Era.Repo.update(changeset_deduct) do
+            #     {:ok, _user} ->
+            #         conn
+            #         |> put_flash(:info, "Points Transfered")
+            #         |> redirect(to: Routes.user_path(conn, :index))
+            #     {:error, changeset} ->
+            #         render conn, "transfer.html", changeset_user: changeset, user: points
+            # end
+
+            # case Era.Repo.update(changeset_receiver) do
+            #     {:ok, _user} ->
+            #         conn
+            #         |> put_flash(:info, "Points Transfered")
+            #         |> redirect(to: Routes.user_path(conn, :index))
+            #     {:error, changeset} ->
+            #         render conn, "transfer.html", changeset_user: changeset, user: points
+            # end
 
 
         end   

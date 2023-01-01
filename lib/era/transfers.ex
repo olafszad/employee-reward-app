@@ -5,7 +5,15 @@ defmodule Era.Transfers do
 
     schema "transfers" do
         field :amount, :integer
-        belongs_to :from_user, Discuss.Users.User
-        belongs_to :to_user, Discuss.Users.User
+        field :from_user, :integer
+        field :to_user, :integer
+
+        timestamps()
+    end
+
+    def changeset(struct, params \\ %{}) do
+        struct
+        |> cast(params, [:amount, :from_user, :to_user])
+        |> validate_required([:amount, :from_user, :to_user])
     end
 end

@@ -2,6 +2,7 @@ defmodule EraWeb.UserController do
     use EraWeb, :controller
 
     alias Era.Users.User
+    alias Era.Transfers
     alias Era.Repo
 
     plug :check_user_id when action in [:transfer, :deduct_points, :edit]
@@ -58,6 +59,7 @@ defmodule EraWeb.UserController do
         changeset_deduct = User.changeset(points, deducted_points_map)
 
         #Handling reciever points to add
+
         reciever = Era.Repo.get_by(User, email: transfering_to_user_email)
         reciever_current_points = reciever.number_of_points
         reciever_added_points = reciever_current_points + points_to_deduct
@@ -65,12 +67,34 @@ defmodule EraWeb.UserController do
         changeset_receiver = User.changeset(reciever, reciever_added_points_map)
 
         #Handling data to insert into transfer history
+        sender_id = points.id
+        receiver_id = reciever.id
+        transfer_points_map = %{"amount" => points_to_deduct}
+        users_map = %{"from_user" => points.id, "to_user" => reciever.id, "amount" => points_to_deduct}
+        changeset_transfers = Transfers.changeset(%Transfers{}, users_map)
+
+
+
+
+
+        IO.puts("++++++++++++++++++++++++++++++++++++")
+        IO.inspect(changeset_transfers)
+        IO.puts("++++++++++++++++++++++++++++++++++++")
 
         if points_to_deduct > loggeed_user_points || points_to_deduct <= 0 do
             conn
             |> put_flash(:info, "Invalid points amount")
             |> redirect(to: Routes.user_path(conn, :index))
         else
+            case Era.Repo.insert(changeset_transfers) do
+                {:ok, _transfers} ->
+                    conn
+                    |> put_flash(:info, "Points Transfered")
+                    |> redirect(to: Routes.user_path(conn, :index))
+                {:error, changeset} ->
+                    render conn, "transfer.html", changeset: changeset, user: points
+            end
+
             case Era.Repo.update(changeset_deduct) do
                 {:ok, _user} ->
                     conn
@@ -88,6 +112,8 @@ defmodule EraWeb.UserController do
                 {:error, changeset} ->
                     render conn, "transfer.html", changeset: changeset, user: points
             end
+
+
         end   
     end
 

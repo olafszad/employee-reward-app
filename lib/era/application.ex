@@ -7,6 +7,8 @@ defmodule Era.Application do
 
   @impl true
   def start(_type, _args) do
+    import Supervisor.Spec
+    
     children = [
       # Start the Ecto repository
       Era.Repo,
@@ -15,9 +17,10 @@ defmodule Era.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Era.PubSub},
       # Start the Endpoint (http/https)
-      EraWeb.Endpoint
+      EraWeb.Endpoint,
       # Start a worker by calling: Era.Worker.start_link(arg)
       # {Era.Worker, arg}
+      worker(Era.Scheduler, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

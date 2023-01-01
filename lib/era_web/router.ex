@@ -40,9 +40,11 @@ defmodule EraWeb.Router do
     pipe_through :browser
 
     get "/profile", UserController, :index
-    put "/profile/transfer/:id", UserController, :deduct_points_from_logged_user
-    post "/profile/transfer/:id", UserController, :deduct_points_from_logged_user
+    put "/profile/transfer/:id", UserController, :transfer
+    post "/profile/transfer/:id", UserController, :transfer
     get "/profile/transfer/:id", UserController, :edit
+    post "/profile/buy/reward/:id", UserController, :buy_reward
+    put "/profile/buy/reward/:id", UserController, :buy_reward
   end
 
   scope "/admin", EraWeb do

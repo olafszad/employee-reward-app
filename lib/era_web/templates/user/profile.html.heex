@@ -6,37 +6,15 @@
                     <h5>Use points to purchase rewards</h5>
                 </li>
 
-                <li class="collection-item">
-                    <div>Test reward One - 200 points
-                        <a href="#!" class="secondary-content">
-                            <i class="material-icons primary-color">shopping_cart</i>
-                        </a>
-                    </div>
-                </li>
+                <%= for admin <- @rewards do %>
+                    <li class="collection-item">
+                        <div>
+                            <%= admin.name %> - <%= admin.price %> points
 
-                <li class="collection-item">
-                    <div>Test reward One - 100 points
-                        <a href="#!" class="secondary-content ">
-                            <i class="material-icons primary-color">shopping_cart</i>
-                        </a>
-                    </div>
-                </li>
-
-                <li class="collection-item">
-                    <div>Test reward One - 100 points
-                        <a href="#!" class="secondary-content ">
-                            <i class="material-icons primary-color">shopping_cart</i>
-                        </a>
-                    </div>
-                </li>
-
-                <li class="collection-item">
-                    <div>Test reward One - 100 points
-                        <a href="#!" class="secondary-content ">
-                            <i class="material-icons primary-color">shopping_cart</i>
-                        </a>
-                    </div>
-                </li>
+                            <%= link "shopping_cart", to: Routes.user_path(@conn, :buy_reward, admin), method: :buy_reward, class: "material-icons primary-color right"%>
+                        </div>
+                    </li>
+                <% end %>
             </ul>
         </div>
     </div>

@@ -1,5 +1,8 @@
 defmodule Era.Task do
+
+    alias Era.Users.User
+
     def work do
-      IO.puts("I'm working!")
+        Era.Repo.update_all(User, set: [number_of_points: 50])
     end
   end

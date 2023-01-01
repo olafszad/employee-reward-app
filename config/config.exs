@@ -59,7 +59,11 @@ import_config "#{config_env()}.exs"
 config :era, Era.Scheduler,
   jobs: [
     phoenix_job: [
-      schedule: "* * * * *",
+      schedule: "@monthly",
+
+      #for test purpose use tihis to update user points poll at every minute
+      # schedule: "* * * * *",
+
       task: {Era.Task, :work, []},
     ]
   ]

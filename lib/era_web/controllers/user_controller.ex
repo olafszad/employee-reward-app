@@ -98,26 +98,6 @@ defmodule EraWeb.UserController do
                 {:error, changeset} ->
                     render conn, "transfer.html", changeset: changeset, user: points
             end
-
-            # case Era.Repo.update(changeset_deduct) do
-            #     {:ok, _user} ->
-            #         conn
-            #         |> put_flash(:info, "Points Transfered")
-            #         |> redirect(to: Routes.user_path(conn, :index))
-            #     {:error, changeset} ->
-            #         render conn, "transfer.html", changeset_user: changeset, user: points
-            # end
-
-            # case Era.Repo.update(changeset_receiver) do
-            #     {:ok, _user} ->
-            #         conn
-            #         |> put_flash(:info, "Points Transfered")
-            #         |> redirect(to: Routes.user_path(conn, :index))
-            #     {:error, changeset} ->
-            #         render conn, "transfer.html", changeset_user: changeset, user: points
-            # end
-
-
         end   
     end
 

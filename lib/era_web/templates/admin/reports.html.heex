@@ -1,0 +1,57 @@
+<div class="row">   
+    <div class="col s12">
+        <div class="card">
+            <h5 class="col s10">Transaction history</h5>
+            <div class="divider col s12"></div>
+            
+            <table class="striped col s12">
+                <thead>
+                    <tr>
+                        <th>Date and Time</th>
+                        <th>Transaction amount</th>
+                        <th>Send from</th>
+                        <th>Send to</th>
+                    </tr>
+                </thead>
+
+                <%= for transfer <- @transfers do %>
+                    <tbody>
+                        <tr>
+                            <td><%= "#{transfer.inserted_at}" %></td>
+                            <td><%= transfer.amount %> points</td>
+                            <td><%= transfer.from_user %></td>
+                            <td><%= transfer.to_user %></td>
+                        </tr>
+                    </tbody>
+                <% end %>
+            </table>
+        </div>
+    </div>
+
+        <div class="col s12">
+        <div class="card">
+            <h5 class="col s10">Bought rewards</h5>
+            <div class="divider col s12"></div>
+            
+            <table class="striped col s12">
+                <thead>
+                    <tr>
+                        <th>Date and Time</th>
+                        <th>Reward name</th>
+                        <th>User email</th>
+                    </tr>
+                </thead>
+
+                <%= for reward <- @rewards do %>
+                    <tbody>
+                        <tr>
+                            <td><%= "#{reward.inserted_at}" %></td>
+                            <td><%= reward.name %></td>
+                            <td><%= reward.user_email %></td>
+                        </tr>
+                    </tbody>
+                <% end %>
+            </table>
+        </div>
+    </div>
+</div>

@@ -52,6 +52,7 @@ defmodule EraWeb.Router do
 
     get "/panel", AdminController, :index
     get "/rewards", AdminController, :new
+    get "/reports", AdminController, :reports
     post "/rewards/new", AdminController, :create
     get "/rewards/:id/edit", AdminController, :edit
     put "/rewards/:id", AdminController, :update

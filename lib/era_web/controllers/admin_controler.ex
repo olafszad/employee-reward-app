@@ -2,6 +2,8 @@ defmodule EraWeb.AdminController do
     use EraWeb, :controller
 
     alias Era.Admin
+    alias Era.Rewards
+    alias Era.Transfers
     alias Era.Users.User
 
     def index(conn, _params) do
@@ -13,6 +15,13 @@ defmodule EraWeb.AdminController do
     def new(conn, _params) do
         changeset = Admin.changeset(%Admin{}, %{})
         render conn, "new.html", changeset: changeset
+    end
+
+    def reports(conn, _params) do
+        rewards = Era.Repo.all(Rewards)
+        transfers = Era.Repo.all(Transfers)
+        IO.inspect(transfers)
+        render conn, "reports.html", rewards: rewards, transfers: transfers
     end
 
     def create(conn, %{"admin" => admin}) do

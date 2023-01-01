@@ -87,6 +87,8 @@ defmodule EraWeb.UserController do
             |> put_flash(:info, "Invalid points amount or user email")
             |> redirect(to: Routes.user_path(conn, :index))
         else
+            Era.Repo.update(changeset_deduct)
+            Era.Repo.update(changeset_receiver)
 
             case Era.Repo.insert(changeset_transfers) do
                 {:ok, _transfers} ->
@@ -96,9 +98,6 @@ defmodule EraWeb.UserController do
                 {:error, changeset} ->
                     render conn, "transfer.html", changeset: changeset, user: points
             end
-
-            Era.Repo.update(changeset_deduct)
-            Era.Repo.update(changeset_receiver)
 
             # case Era.Repo.update(changeset_deduct) do
             #     {:ok, _user} ->

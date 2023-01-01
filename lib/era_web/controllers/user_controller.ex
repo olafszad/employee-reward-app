@@ -11,13 +11,12 @@ defmodule EraWeb.UserController do
 
     def index(conn, _params) do
         rewards = Era.Repo.all(Admin)
+        transfers = Era.Repo.all(Transfers)
         user = Era.Repo.all(User)
-        render conn, "profile.html", user: user, rewards: rewards
+        render conn, "profile.html", user: user, rewards: rewards, transfers: transfers
     end
 
     def edit(conn, %{"id" => user_id}) do
-        loggeed_user_id = Era.Repo.get(User, conn.assigns.current_user.id).id
-
         user = Era.Repo.get(User, user_id)
         changeset = User.changeset(user)
         render conn, "transfer.html", changeset: changeset, user: user
@@ -26,9 +25,6 @@ defmodule EraWeb.UserController do
     def buy_reward(conn, %{"id" => reward_id}) do
         reward_price = Era.Repo.get(Admin, reward_id).price
         loggeed_user_points = Era.Repo.get(User, conn.assigns.current_user.id).number_of_points
-        IO.puts("-----------------------------------------------------------------------------")
-        IO.inspect(reward_price)
-        IO.puts("-----------------------------------------------------------------------------")
         reward_map = %{"name" => Era.Repo.get(Admin, reward_id).name, "user_email" => Era.Repo.get(User, conn.assigns.current_user.id).email}
         changeset_reward = Rewards.changeset(%Rewards{}, reward_map)
 

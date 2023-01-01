@@ -42,19 +42,21 @@
                     <tr>
                         <th>Date and Time</th>
                         <th>Transaction amount</th>
+                        <th>Send to</th>
                     </tr>
                 </thead>
 
-                <tbody>
-                    <tr>
-                        <td>Alvin</td>
-                        <td>Eclair</td>
-                    </tr>
-                    <tr>
-                        <td>Alan</td>
-                        <td>Jellybean</td>
-                    </tr>
-                </tbody>
+                <%= for transfer <- @transfers do %>
+                    <%= if @conn.assigns.current_user.id == transfer.from_user do%>
+                        <tbody>
+                            <tr>
+                                <td><%= transfer.inserted_at %></td>
+                                <td><%= transfer.amount %></td>
+                                <td><%= transfer.to_user %></td>
+                            </tr>
+                        </tbody>
+                    <% end %>
+                <% end %>
             </table>
         </div>
     </div>

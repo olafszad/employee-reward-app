@@ -50,7 +50,7 @@
                     <%= if @conn.assigns.current_user.email == transfer.from_user do%>
                         <tbody>
                             <tr>
-                                <td><%= "#{transfer.inserted_at.year}-#{transfer.inserted_at.month}-#{transfer.inserted_at.day} #{transfer.inserted_at.hour}:#{transfer.inserted_at.minute}" %></td>
+                                <td><%= "#{transfer.inserted_at}" %></td>
                                 <td><%= transfer.amount %> points</td>
                                 <td><%= transfer.to_user %></td>
                             </tr>
